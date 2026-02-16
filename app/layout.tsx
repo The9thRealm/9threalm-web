@@ -28,6 +28,29 @@ export default function RootLayout({
       <body className={`${orbitron.variable} ${inter.variable} antialiased bg-[#020205] text-[#e0e0e0]`}>
         <InteractiveBackground />
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const hideToolbar = () => {
+                  const elements = [
+                    'vercel-live-feedback',
+                    '#vercel-live-feedback',
+                    '[data-vercel-toolbar]',
+                    '.vercel-toolbar'
+                  ];
+                  elements.forEach(selector => {
+                    const el = document.querySelector(selector);
+                    if (el) el.remove();
+                  });
+                };
+                hideToolbar();
+                const observer = new MutationObserver(hideToolbar);
+                observer.observe(document.body, { childList: true, subtree: true });
+              })();
+            `,
+          }}
+        />
       </body>
     </html>
   );
