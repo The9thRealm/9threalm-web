@@ -50,9 +50,9 @@ export default function Subsidiaries() {
           className="mb-16 border-l-2 border-neon-cyan/50 pl-6"
         >
           <h2 className="text-4xl md:text-6xl font-display font-black text-white tracking-tighter">
-            THE SYNDICATE
+            CORE PORTFOLIO
           </h2>
-          <p className="text-white/40 font-mono text-sm tracking-widest mt-2 uppercase">Core Portfolio / Industrial Dominance</p>
+          <p className="text-white/40 font-mono text-sm tracking-widest mt-2 uppercase">Parent Organization / Asset Management</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
