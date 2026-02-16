@@ -31,7 +31,7 @@ const brands = [
   },
   {
     name: 'OmnifusionAI',
-    domain: '9threalm.win/omnifusionai',
+    domain: '9THREALM.WIN/OMNIFUSIONAI',
     desc: 'Neural-linked automation & autonomous agents.',
     icon: Zap,
     gradient: 'from-rose-500/20 to-pink-900/20',
@@ -39,6 +39,7 @@ const brands = [
   }
 ];
 
+// Refined routing for institutional compliance.
 export default function Subsidiaries() {
   return (
     <section id="ecosystem" className="py-32 px-6 relative">
