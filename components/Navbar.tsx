@@ -26,7 +26,7 @@ export default function Navbar() {
           <div className="w-8 h-8 rounded bg-gradient-to-br from-neon-cyan to-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,255,255,0.4)]">
             <Globe size={18} className="text-black" />
           </div>
-          <span className="font-display font-bold text-xl tracking-widest text-white">9TH<span className="text-neon-cyan">.WIN</span></span>
+          <span className="font-display font-bold text-xl tracking-widest text-white uppercase">9TH <span className="text-neon-cyan">REALM</span></span>
         </a>
 
         {/* Desktop Menu */}
