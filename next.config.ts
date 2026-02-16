@@ -6,13 +6,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/omnifusionai/:path*',
-        destination: '/OmnifusionAI/:path*',
+        source: '/OmnifusionAI/:path*',
+        destination: '/omnifusionai/:path*',
         permanent: true,
       },
       {
         source: '/OmnifusionAi/:path*',
-        destination: '/OmnifusionAI/:path*',
+        destination: '/omnifusionai/:path*',
         permanent: true,
       },
     ];
