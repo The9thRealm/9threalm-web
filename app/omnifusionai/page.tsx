@@ -27,17 +27,18 @@ export default function OmnifusionAIHome() {
               <h1 className="text-6xl md:text-8xl font-display font-black tracking-tighter mb-8 leading-tight">
                 OMNIFUSION <span className="text-neon-cyan hologram-text">AI</span>
               </h1>
-              <p className="text-white/50 text-xl mb-10 leading-relaxed font-light max-w-xl">
-                The autonomous intelligence layer of 9th Realm. Powering strategic automation, neural-linked infrastructure, and next-generation market intelligence.
+              <p className="text-white/50 text-xl mb-6 leading-relaxed font-light max-w-xl">
+                The autonomous intelligence layer of 9th Realm. Built to integrate AI into your everyday workflow—simplifying tasks, work, and existence.
+              </p>
+              <p className="text-neon-cyan/80 text-sm font-mono tracking-widest mb-10 uppercase border-l border-neon-cyan/30 pl-4 py-2">
+                BECOME THE PRESIDENT. <br />
+                OMNIFUSION IS YOUR WORKFORCE.
               </p>
               
               <div className="flex flex-wrap gap-6">
                 <a href="/omnifusionai/terminal" className="px-8 py-4 bg-neon-cyan text-black font-display font-bold uppercase tracking-widest text-xs hover:shadow-[0_0_30px_rgba(0,255,255,0.5)] transition-all flex items-center gap-2">
                   Access Terminal <Terminal size={16} />
                 </a>
-                <div className="flex items-center gap-3 px-6 py-4 border border-white/10 text-white/40 font-mono text-[10px] uppercase tracking-widest">
-                  <Activity size={14} className="text-green-500 animate-pulse" /> System Nominal
-                </div>
               </div>
             </motion.div>
 
@@ -66,11 +67,16 @@ export default function OmnifusionAIHome() {
       {/* Capabilities */}
       <section className="py-32 px-6 border-t border-white/5 bg-black/20">
         <div className="max-w-7xl mx-auto">
+          <div className="mb-20 text-center">
+            <h2 className="text-3xl font-display font-bold uppercase tracking-[0.3em] mb-4">The Command Structure</h2>
+            <p className="text-white/30 font-mono text-xs uppercase tracking-widest">Autonomous Execution across every tier.</p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
-              { title: 'Autonomous Agents', desc: 'Self-correcting neural networks managing complex multi-vector tasks.', icon: Cpu },
-              { title: 'Strategic Synthesis', desc: 'Predictive market modeling with 99.9% data integrity and synthesis.', icon: Zap },
-              { title: 'Hardened Security', desc: 'AES-256 encrypted uplink protocols with zero-trust architecture.', icon: Shield }
+              { title: 'The President', desc: 'You provide the vision and high-level strategy. You are the sole decision-maker.', icon: Shield, tier: 'TIER 01' },
+              { title: 'Vice President', desc: 'Omnifusion AI coordinates workflows and manages mid-level systems autonomously.', icon: Cpu, tier: 'TIER 02' },
+              { title: 'The Workforce', desc: 'A tireless legion of automated agents handling grunt work and data processing 24/7.', icon: Activity, tier: 'TIER 03' }
             ].map((feature, i) => (
               <motion.div
                 key={feature.title}
@@ -78,12 +84,13 @@ export default function OmnifusionAIHome() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.2 }}
                 viewport={{ once: true }}
-                className="space-y-4"
+                className="glass-panel p-8 border-white/5 relative group hover:border-neon-cyan/30 transition-all"
               >
-                <div className="w-10 h-10 rounded-lg bg-neon-cyan/5 border border-neon-cyan/20 flex items-center justify-center text-neon-cyan">
+                <div className="text-[8px] font-mono text-neon-cyan/30 mb-4 tracking-[0.5em]">{feature.tier}</div>
+                <div className="w-10 h-10 rounded-lg bg-neon-cyan/5 border border-neon-cyan/20 flex items-center justify-center text-neon-cyan mb-6">
                   <feature.icon size={20} />
                 </div>
-                <h3 className="text-xl font-display font-bold uppercase tracking-tight">{feature.title}</h3>
+                <h3 className="text-xl font-display font-bold uppercase tracking-tight mb-4 group-hover:text-neon-cyan transition-colors">{feature.title}</h3>
                 <p className="text-white/40 text-sm leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
