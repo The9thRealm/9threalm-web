@@ -32,21 +32,25 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                const hideToolbar = () => {
-                  const elements = [
+                const obliterate = () => {
+                  const selectors = [
                     'vercel-live-feedback',
                     '#vercel-live-feedback',
                     '[data-vercel-toolbar]',
-                    '.vercel-toolbar'
+                    '.vercel-toolbar',
+                    '#vercel-toolbar'
                   ];
-                  elements.forEach(selector => {
-                    const el = document.querySelector(selector);
-                    if (el) el.remove();
+                  selectors.forEach(s => {
+                    document.querySelectorAll(s).forEach(el => el.remove());
                   });
                 };
-                hideToolbar();
-                const observer = new MutationObserver(hideToolbar);
-                observer.observe(document.body, { childList: true, subtree: true });
+                obliterate();
+                // Check frequently during initial load
+                const interval = setInterval(obliterate, 500);
+                setTimeout(() => clearInterval(interval), 5000);
+                // Also watch for late injections
+                const observer = new MutationObserver(obliterate);
+                observer.observe(document.documentElement, { childList: true, subtree: true });
               })();
             `,
           }}
