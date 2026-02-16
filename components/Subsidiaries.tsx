@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, ShoppingBag, Database, Zap, ArrowRight } from 'lucide-react';
+import { Music, ShoppingBag, Leaf, Zap, ArrowRight } from 'lucide-react';
 
 const brands = [
   {
     name: 'NinjaLOC',
     domain: 'NinjaLOC.com',
-    desc: 'Localized infrastructure & advanced security protocols.',
-    icon: Shield,
+    desc: 'Autonomous artist collective & underground record label.',
+    icon: Music,
     gradient: 'from-blue-600/20 to-cyan-400/20',
     url: 'https://NinjaLOC.com'
   },
@@ -24,8 +24,8 @@ const brands = [
   {
     name: 'CBTDA',
     domain: 'CBTDA.win',
-    desc: 'Tactical data analytics & cloud intelligence.',
-    icon: Database,
+    desc: 'The pinnacle of botanical intelligence & pure wellness.',
+    icon: Leaf,
     gradient: 'from-emerald-500/20 to-teal-900/20',
     url: 'https://CBTDA.win'
   },
