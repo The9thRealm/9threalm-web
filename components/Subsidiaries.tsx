@@ -35,7 +35,7 @@ const brands = [
     desc: 'Neural-linked automation & autonomous agents.',
     icon: Zap,
     gradient: 'from-rose-500/20 to-pink-900/20',
-    url: '#'
+    url: 'https://Omnifusion.ai'
   }
 ];
 

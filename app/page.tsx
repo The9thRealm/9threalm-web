@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import Intelligence from '@/components/Intelligence';
 import Subsidiaries from '@/components/Subsidiaries';
 import Contact from '@/components/Contact';
 
@@ -8,6 +9,7 @@ export default function Home() {
     <main className="min-h-screen selection:bg-neon-cyan/30 selection:text-white">
       <Navbar />
       <Hero />
+      <Intelligence />
       <Subsidiaries />
       <Contact />
       
