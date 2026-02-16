@@ -22,7 +22,7 @@ export default function Navbar() {
       transition={{ duration: 0.8 }}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <a href="#" className="flex items-center gap-2 group">
+        <a href="/" className="flex items-center gap-2 group">
           <div className="w-8 h-8 rounded bg-gradient-to-br from-neon-cyan to-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,255,255,0.4)]">
             <Globe size={18} className="text-black" />
           </div>
@@ -31,15 +31,19 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
-          {['Ecosystem', 'Intelligence', 'Contact'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="text-xs font-mono text-white/60 hover:text-neon-cyan transition-colors uppercase tracking-widest relative group">
-              {item}
+          {[
+            { name: 'Ecosystem', href: '/#ecosystem' },
+            { name: 'Intelligence', href: '/#intelligence' },
+            { name: 'Contact', href: '/#contact' }
+          ].map((item) => (
+            <a key={item.name} href={item.href} className="text-xs font-mono text-white/60 hover:text-neon-cyan transition-colors uppercase tracking-widest relative group">
+              {item.name}
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-neon-cyan transition-all group-hover:w-full shadow-[0_0_8px_rgba(0,255,255,0.8)]" />
             </a>
           ))}
-          <button className="px-6 py-2 border border-neon-cyan/30 text-neon-cyan font-mono text-[10px] uppercase tracking-tighter hover:bg-neon-cyan hover:text-black transition-all hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]">
+          <a href="/omnifusionai" className="px-6 py-2 border border-neon-cyan/30 text-neon-cyan font-mono text-[10px] uppercase tracking-tighter hover:bg-neon-cyan hover:text-black transition-all hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]">
             Access Hub
-          </button>
+          </a>
         </div>
 
         {/* Mobile Toggle */}
@@ -57,9 +61,14 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden absolute top-full left-0 w-full glass-panel border-b border-white/10 p-6 flex flex-col gap-4 overflow-hidden"
           >
-            {['Ecosystem', 'Intelligence', 'Contact'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="text-lg font-display text-white/80" onClick={() => setIsOpen(false)}>
-                {item}
+            {[
+              { name: 'Ecosystem', href: '/#ecosystem' },
+              { name: 'Intelligence', href: '/#intelligence' },
+              { name: 'Contact', href: '/#contact' },
+              { name: 'Access Hub', href: '/omnifusionai' }
+            ].map((item) => (
+              <a key={item.name} href={item.href} className="text-lg font-display text-white/80" onClick={() => setIsOpen(false)}>
+                {item.name}
               </a>
             ))}
           </motion.div>

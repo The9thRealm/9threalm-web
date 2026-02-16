@@ -1,25 +1,25 @@
 "use client";
 
-import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Float } from '@react-three/drei';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 
 const AccretionDisk = () => {
   const pointsRef = useRef<THREE.Points>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  const { mouse, viewport } = useThree();
   
-  // Create 5000 particles for the accretion disk
-  const count = 5000;
+  const count = 6000;
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      // Distribution: closer to the center but with a hole in the middle
-      const radius = 1.5 + Math.random() * 2.5; 
+      const radius = 1.4 + Math.random() * 2.8; 
       const x = Math.cos(angle) * radius;
-      const y = (Math.random() - 0.5) * 0.2; // Thin disk
+      const y = (Math.random() - 0.5) * 0.15;
       const z = Math.sin(angle) * radius;
       pos.set([x, y, z], i * 3);
     }
@@ -28,36 +28,42 @@ const AccretionDisk = () => {
 
   useFrame((state) => {
     if (pointsRef.current) {
-      // Rotation speed
-      pointsRef.current.rotation.y += 0.002;
-      // Slight wobble
-      pointsRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+      pointsRef.current.rotation.y += 0.0015;
+    }
+    
+    if (groupRef.current) {
+      // Subtle lean towards mouse
+      const targetX = (mouse.x * viewport.width) / 15;
+      const targetY = (mouse.y * viewport.height) / 15;
+      
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, Math.PI / 3.5 - targetY * 0.2, 0.05);
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetX * 0.2, 0.05);
     }
   });
 
   return (
-    <group rotation={[Math.PI / 3.5, 0, 0]}>
+    <group ref={groupRef}>
       <Points ref={pointsRef} positions={positions} stride={3} frustumCulled={false}>
         <PointMaterial
           transparent
           color="#00ffff"
-          size={0.015}
+          size={0.012}
           sizeAttenuation={true}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
         />
       </Points>
       
-      {/* Event Horizon (The Black Core) */}
+      {/* Event Horizon */}
       <mesh>
-        <sphereGeometry args={[1.4, 32, 32]} />
+        <sphereGeometry args={[1.3, 32, 32]} />
         <meshBasicMaterial color="#000000" />
       </mesh>
       
-      {/* Subtle Glow */}
-      <mesh scale={1.45}>
+      {/* Distortion Glow */}
+      <mesh scale={1.4}>
         <sphereGeometry args={[1, 32, 32]} />
-        <meshBasicMaterial color="#00ffff" transparent opacity={0.1} side={THREE.BackSide} />
+        <meshBasicMaterial color="#00ffff" transparent opacity={0.05} side={THREE.BackSide} />
       </mesh>
     </group>
   );
