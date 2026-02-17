@@ -110,10 +110,35 @@ export default function OmnifusionTerminal() {
   const [logs, setLogs] = useState<string[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const [vncUrl, setVncUrl] = useState("");
+
   useEffect(() => {
     const savedUrl = localStorage.getItem("9threalm_bridge_url");
     setBridgeUrl(savedUrl || "https://directly-angels-kitty-joel.trycloudflare.com");
+    
+    const savedVnc = localStorage.getItem("9threalm_vnc_url");
+    setVncUrl(savedVnc || "https://joyce-drivers-amino-kodak.trycloudflare.com/vnc.html?autoconnect=true&resize=scale");
   }, []);
+
+  useEffect(() => {
+    if (vncUrl) localStorage.setItem("9threalm_vnc_url", vncUrl);
+  }, [vncUrl]);
+
+  // Command handler for updating URLs
+  const handleCommand = (cmd: string) => {
+    if (cmd.startsWith("set-gateway ")) {
+      const newUrl = cmd.split(" ")[1];
+      setBridgeUrl(newUrl);
+      return "Gateway updated to: " + newUrl;
+    }
+    if (cmd.startsWith("set-vnc ")) {
+      const newUrl = cmd.split(" ")[1];
+      setVncUrl(newUrl);
+      return "Remote Desktop URL updated to: " + newUrl;
+    }
+    return null;
+  };
+
 
   useEffect(() => {
     const checkStatus = async () => {
@@ -177,6 +202,15 @@ export default function OmnifusionTerminal() {
     setHistoryIndex(-1);
     setLogs(prev => [...prev, `9threalm@omnifusion:~$ ${currentCommand}`]);
 
+    // Check for local commands first
+    const localResponse = handleCommand(currentCommand);
+    if (localResponse) {
+      setLogs(prev => [...prev, localResponse]);
+      setStatus("success");
+      setStatus("idle");
+      return;
+    }
+
     try {
       const cleanUrl = bridgeUrl.replace(/\/$/, ""); 
       const response = await fetch(`${cleanUrl}/command`, {
@@ -212,7 +246,7 @@ export default function OmnifusionTerminal() {
   };
 
   const launchRemoteDesktop = () => {
-    window.open("https://joyce-drivers-amino-kodak.trycloudflare.com/vnc.html?autoconnect=true&resize=scale", "_blank");
+    window.open(vncUrl || "https://joyce-drivers-amino-kodak.trycloudflare.com/vnc.html?autoconnect=true&resize=scale", "_blank");
   };
 
   if (!isAuthorized) {
