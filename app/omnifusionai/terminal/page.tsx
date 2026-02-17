@@ -139,10 +139,19 @@ export default function OmnifusionTerminal() {
   };
 
   useEffect(() => {
-    const savedUrl = localStorage.getItem("9threalm_bridge_url");
+    let savedUrl = localStorage.getItem("9threalm_bridge_url");
+    // Purge old local URLs to prevent mixed content issues on remote devices
+    if (savedUrl && savedUrl.includes("10.0.0.179")) {
+      savedUrl = null;
+      localStorage.removeItem("9threalm_bridge_url");
+    }
     setBridgeUrl(savedUrl || "https://trying-attacks-blues-introduction.trycloudflare.com");
     
-    const savedVnc = localStorage.getItem("9threalm_vnc_url");
+    let savedVnc = localStorage.getItem("9threalm_vnc_url");
+    if (savedVnc && savedVnc.includes("10.0.0.179")) {
+      savedVnc = null;
+      localStorage.removeItem("9threalm_vnc_url");
+    }
     setVncUrl(savedVnc || "https://roles-nearby-existing-lenders.trycloudflare.com/vnc.html?autoconnect=true&resize=scale");
 
     const savedVoice = localStorage.getItem("9threalm_voice_enabled");
