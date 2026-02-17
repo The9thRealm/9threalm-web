@@ -192,7 +192,10 @@ export default function OmnifusionTerminal() {
       if (!bridgeUrl) return;
       try {
         const cleanUrl = bridgeUrl.replace(/\/$/, "");
-        const res = await fetch(`${cleanUrl}/status`, { signal: AbortSignal.timeout(3000) });
+        const res = await fetch(`${cleanUrl}/status`, { 
+          headers: { "Bypass-Tunnel-Reminder": "true" },
+          signal: AbortSignal.timeout(3000) 
+        });
         setIsOnline(res.ok);
       } catch {
         setIsOnline(false);
