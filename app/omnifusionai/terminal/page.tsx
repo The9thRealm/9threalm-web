@@ -299,7 +299,9 @@ export default function OmnifusionTerminal() {
   };
 
   const launchRemoteDesktop = () => {
-    window.open(vncUrl || "https://joyce-drivers-amino-kodak.trycloudflare.com/vnc.html?autoconnect=true&resize=scale", "_blank");
+    // Add the VNC password to the URL for automatic login
+    const finalVncUrl = (vncUrl || "https://roles-nearby-existing-lenders.trycloudflare.com/vnc.html?autoconnect=true&resize=scale") + "&password=Godmode1111";
+    window.open(finalVncUrl, "_blank");
   };
 
   if (!isAuthorized) {
