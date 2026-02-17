@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Menu, X } from 'lucide-react';
 
@@ -22,12 +23,12 @@ export default function Navbar() {
       transition={{ duration: 0.8 }}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <a href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group">
           <div className="w-8 h-8 rounded bg-gradient-to-br from-neon-cyan to-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,255,255,0.4)]">
             <Globe size={18} className="text-black" />
           </div>
           <span className="font-display font-bold text-xl tracking-widest text-white uppercase">9TH <span className="text-neon-cyan">REALM</span></span>
-        </a>
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
@@ -36,14 +37,14 @@ export default function Navbar() {
             { name: 'Intelligence', href: '/#intelligence' },
             { name: 'Contact', href: '/#contact' }
           ].map((item) => (
-            <a key={item.name} href={item.href} className="text-xs font-mono text-white/60 hover:text-neon-cyan transition-colors uppercase tracking-widest relative group">
+            <Link key={item.name} href={item.href} className="text-xs font-mono text-white/60 hover:text-neon-cyan transition-colors uppercase tracking-widest relative group">
               {item.name}
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-neon-cyan transition-all group-hover:w-full shadow-[0_0_8px_rgba(0,255,255,0.8)]" />
-            </a>
+            </Link>
           ))}
-          <a href="/omnifusionai" className="px-6 py-2 border border-neon-cyan/30 text-neon-cyan font-mono text-[10px] uppercase tracking-tighter hover:bg-neon-cyan hover:text-black transition-all hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]">
+          <Link href="/omnifusionai" className="px-6 py-2 border border-neon-cyan/30 text-neon-cyan font-mono text-[10px] uppercase tracking-tighter hover:bg-neon-cyan hover:text-black transition-all hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]">
             Access Hub
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -67,9 +68,9 @@ export default function Navbar() {
               { name: 'Contact', href: '/#contact' },
               { name: 'Access Hub', href: '/omnifusionai' }
             ].map((item) => (
-              <a key={item.name} href={item.href} className="text-lg font-display text-white/80" onClick={() => setIsOpen(false)}>
+              <Link key={item.name} href={item.href} className="text-lg font-display text-white/80" onClick={() => setIsOpen(false)}>
                 {item.name}
-              </a>
+              </Link>
             ))}
           </motion.div>
         )}

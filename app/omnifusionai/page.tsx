@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Cpu, Zap, Shield, Terminal, ArrowRight, Activity } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -36,9 +37,9 @@ export default function OmnifusionAIHome() {
               </p>
               
               <div className="flex flex-wrap gap-6">
-                <a href="/omnifusionai/terminal" className="px-8 py-4 bg-neon-cyan text-black font-display font-bold uppercase tracking-widest text-xs hover:shadow-[0_0_30px_rgba(0,255,255,0.5)] transition-all flex items-center gap-2">
+                <Link href="/omnifusionai/terminal" className="px-8 py-4 bg-neon-cyan text-black font-display font-bold uppercase tracking-widest text-xs hover:shadow-[0_0_30px_rgba(0,255,255,0.5)] transition-all flex items-center gap-2">
                   Access Terminal <Terminal size={16} />
-                </a>
+                </Link>
               </div>
             </motion.div>
 

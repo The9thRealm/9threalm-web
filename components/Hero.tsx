@@ -7,24 +7,26 @@ import * as THREE from 'three';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 
+const PARTICLE_COUNT = 6000;
+const PARTICLE_POSITIONS = (() => {
+  const pos = new Float32Array(PARTICLE_COUNT * 3);
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const radius = 1.4 + Math.random() * 2.8; 
+    const x = Math.cos(angle) * radius;
+    const y = (Math.random() - 0.5) * 0.15;
+    const z = Math.sin(angle) * radius;
+    pos.set([x, y, z], i * 3);
+  }
+  return pos;
+})();
+
 const AccretionDisk = () => {
   const pointsRef = useRef<THREE.Points>(null);
   const groupRef = useRef<THREE.Group>(null);
   const { mouse, viewport } = useThree();
   
-  const count = 6000;
-  const positions = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 1.4 + Math.random() * 2.8; 
-      const x = Math.cos(angle) * radius;
-      const y = (Math.random() - 0.5) * 0.15;
-      const z = Math.sin(angle) * radius;
-      pos.set([x, y, z], i * 3);
-    }
-    return pos;
-  }, []);
+  const positions = useMemo(() => PARTICLE_POSITIONS, []);
 
   useFrame((state) => {
     if (pointsRef.current) {
