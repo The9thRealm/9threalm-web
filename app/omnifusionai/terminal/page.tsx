@@ -111,6 +111,32 @@ export default function OmnifusionTerminal() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [vncUrl, setVncUrl] = useState("");
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
+
+  const speak = (text: string) => {
+    if (!isVoiceEnabled || typeof window === "undefined" || !window.speechSynthesis) return;
+
+    // Clean up text for better speech
+    const cleanText = text
+      .replace(/\[.*?\]/g, "")
+      .replace(/\{.*?\}/g, "data received")
+      .replace(/[#$]> /g, "")
+      .substring(0, 500);
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    const voices = window.speechSynthesis.getVoices();
+    const britishFemale = voices.find(v => 
+      (v.lang.includes("en-GB") || v.lang.includes("en_GB")) && 
+      (v.name.toLowerCase().includes("female") || v.name.toLowerCase().includes("samantha") || v.name.toLowerCase().includes("hazel") || v.name.toLowerCase().includes("google uk"))
+    ) || voices.find(v => v.lang.includes("en-GB"));
+
+    if (britishFemale) utterance.voice = britishFemale;
+    utterance.rate = 1.0;
+    utterance.pitch = 1.1;
+    
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  };
 
   useEffect(() => {
     const savedUrl = localStorage.getItem("9threalm_bridge_url");
@@ -118,11 +144,15 @@ export default function OmnifusionTerminal() {
     
     const savedVnc = localStorage.getItem("9threalm_vnc_url");
     setVncUrl(savedVnc || "https://roles-nearby-existing-lenders.trycloudflare.com/vnc.html?autoconnect=true&resize=scale");
+
+    const savedVoice = localStorage.getItem("9threalm_voice_enabled");
+    if (savedVoice !== null) setIsVoiceEnabled(savedVoice === "true");
   }, []);
 
   useEffect(() => {
     if (vncUrl) localStorage.setItem("9threalm_vnc_url", vncUrl);
-  }, [vncUrl]);
+    localStorage.setItem("9threalm_voice_enabled", String(isVoiceEnabled));
+  }, [vncUrl, isVoiceEnabled]);
 
   // Command handler for updating URLs
   const handleCommand = (cmd: string) => {
@@ -135,6 +165,14 @@ export default function OmnifusionTerminal() {
       const newUrl = cmd.split(" ")[1];
       setVncUrl(newUrl);
       return "Remote Desktop URL updated to: " + newUrl;
+    }
+    if (cmd === "voice-on") {
+      setIsVoiceEnabled(true);
+      return "Vocal uplink enabled.";
+    }
+    if (cmd === "voice-off") {
+      setIsVoiceEnabled(false);
+      return "Vocal uplink disabled.";
     }
     return null;
   };
@@ -206,6 +244,7 @@ export default function OmnifusionTerminal() {
     const localResponse = handleCommand(currentCommand);
     if (localResponse) {
       setLogs(prev => [...prev, localResponse]);
+      speak(localResponse);
       setStatus("success");
       setStatus("idle");
       return;
@@ -234,11 +273,13 @@ export default function OmnifusionTerminal() {
           ? data.response 
           : JSON.stringify(data.response, null, 2);
         setLogs(prev => [...prev, cleanResponse]);
+        speak(cleanResponse);
       }
     } catch (err) {
       setStatus("error");
       const errorMessage = err instanceof Error ? err.message : "network failure";
       setLogs(prev => [...prev, `error: [UPLINK_FAILURE] ${errorMessage.toUpperCase()}`]);
+      speak("Uplink failure detected.");
       console.error("Terminal UPLINK_FAILURE:", err);
     } finally {
       setStatus("idle");
@@ -342,6 +383,12 @@ export default function OmnifusionTerminal() {
                 className="px-2 py-0.5 rounded-sm border bg-black border-[#00ff41]/20 text-[#00ff41]/40 hover:text-[#00ff41]/60 hover:border-[#00ff41]/40 text-[8px] font-bold tracking-widest transition-all uppercase"
               >
                 [ REMOTE_VIEW ]
+              </button>
+              <button 
+                onClick={() => setIsVoiceEnabled(!isVoiceEnabled)}
+                className={`px-2 py-0.5 rounded-sm border text-[8px] font-bold tracking-widest transition-all ${isVoiceEnabled ? 'bg-[#00ff41]/10 border-[#00ff41]/40 text-[#00ff41]' : 'bg-black border-[#00ff41]/20 text-[#00ff41]/40 hover:text-[#00ff41]/60'}`}
+              >
+                {isVoiceEnabled ? "[ VOICE_ACTIVE ]" : "[ VOICE_OFFLINE ]"}
               </button>
              <input 
                 type="text" 
