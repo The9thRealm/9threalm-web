@@ -114,10 +114,10 @@ export default function OmnifusionTerminal() {
 
   useEffect(() => {
     const savedUrl = localStorage.getItem("9threalm_bridge_url");
-    setBridgeUrl(savedUrl || "https://directly-angels-kitty-joel.trycloudflare.com");
+    setBridgeUrl(savedUrl || "https://determines-statutes-murray-passengers.trycloudflare.com");
     
     const savedVnc = localStorage.getItem("9threalm_vnc_url");
-    setVncUrl(savedVnc || "https://joyce-drivers-amino-kodak.trycloudflare.com/vnc.html?autoconnect=true&resize=scale");
+    setVncUrl(savedVnc || "https://change-casino-rev-confident.trycloudflare.com/vnc.html?autoconnect=true&resize=scale");
   }, []);
 
   useEffect(() => {
